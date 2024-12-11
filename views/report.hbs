@@ -1,0 +1,183 @@
+<html>
+
+<head>
+  <title>Customized PDF Report</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    .header {
+      text-align: center;
+    }
+
+    .header img {
+      max-width: 120px;
+    }
+
+    .content {
+      font-size: 14px;
+    }
+
+    .user {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .payment {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .payment-method,
+    .claculations {
+      flex: 1;
+    }
+
+    .claculations {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .amount {
+      text-align: end;
+      font-weight:
+        bold;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    table,
+    th,
+    td {
+      border: 1px solid #ddd;
+    }
+
+    th,
+    td {
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f4f4f4;
+      text-align: center;
+    }
+
+    td {
+      text-align: center;
+    }
+
+    .desc {
+      text-align: start;
+    }
+
+    .sub-total {
+      text-align: right;
+    }
+
+    .footer {
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .currier-info,
+    .barcode {
+      flex: 1;
+    }
+
+    .barcode {
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class='header'>
+    <img src='{{logo}}' alt='Company Logo' />
+  </div>
+
+  <div class='content'>
+    <div class='user'>
+      <div class='sender'>
+        <p>Sender</p>
+        <p>Md. Azher Hossain</p>
+        <p>01321208958</p>
+        <p>N/A</p>
+      </div>
+      <div class='receiver'>
+        <p>Receiver</p>
+        <p>Istiak Hasan</p>
+        <p>01306910346</p>
+        <p>Rampura, Banasree, Dhaka, Bangladesh</p>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th class='desc'>Description</th>
+          <th>Price</th>
+          <th>Qty</th>
+          <th>Sub Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each items}}
+        <tr>
+          <td class='desc'>{{this.description}}</td>
+          <td>{{this.price}}</td>
+          <td>{{this.quantity}}</td>
+          <td class='sub-total'>{{this.sub_total}} TK</td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+
+    <div class='payment'>
+      <div class='payment-method'>
+        <p>Payment method: <b>COD</b></p>
+        <p>*Note: <b>Something</b></p>
+      </div>
+
+      <div class='claculations'>
+        <div class='title'>
+          <p>Sub total</p>
+          <p>Discount</p>
+          <p>Total vat</p>
+          <p>Delivery charge</p>
+          <p>Advance</p>
+          <p>Due</p>
+        </div>
+        <div class='amount'>
+          <p>560</p>
+          <p>00</p>
+          <p>00</p>
+          <p>120</p>
+          <p>00</p>
+          <p>0</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class='footer'>
+    <div class='currier-info'>
+      <p>Currier information</p>
+      <p>SteadFast</p>
+      <p>For any questions please contact Us at</p>
+      <p>+8809642922922</p>
+    </div>
+    <div class='barcode'>
+      <p style="font-weight: bold;">24121477872208</p>
+      <img src="{{barcode}}" alt="Barcode" />
+    </div>
+  </div>
+</body>
+
+</html>
