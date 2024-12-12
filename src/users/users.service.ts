@@ -29,7 +29,7 @@ export class UsersService {
     return this.userRepository.findOneById(id);
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
+  update(id: number, updateUserDto: UpdateUserDto) { 
     const user:User = new User();
 
     user.fullName = updateUserDto.fullName;

@@ -16,6 +16,6 @@ async function bootstrap() {
   // Set the view engine to handlebars instead of ejs
   app.setViewEngine('hbs');
 
-  await app.listen(process.env.PORT ?? 3000);
+  await app.listen(process.env.PORT ?? 3001);
 }
 bootstrap();
