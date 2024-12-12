@@ -23,12 +23,12 @@ export class ReportsService {
     return new Promise((resolve, reject) => {
       bwipjs.toBuffer(
         {
-          bcid: 'code128',       // Barcode type
-          text: id,              // Text to encode (your ID)
-          scale: 3,              // Scale factor
-          height: 7,            // Bar height, in millimeters
-          includetext: false,     // Show human-readable text
-          textxalign: 'center',  // Align text to center
+          bcid: 'code128', // Barcode type
+          text: id, // Text to encode (your ID)
+          scale: 3, // Scale factor
+          height: 7, // Bar height, in millimeters
+          includetext: false, // Show human-readable text
+          textxalign: 'center', // Align text to center
         },
         (err, png) => {
           if (err) {
@@ -42,7 +42,7 @@ export class ReportsService {
     });
   }
 
-  async generatePdf(data: any): Promise<String> {
+  async generatePdf(data: any): Promise<any> {
     // Load and compile the HTML template
     const templatePath = './templates/report.html';
     const htmlTemplate = fs.readFileSync(templatePath, 'utf-8');
@@ -57,20 +57,37 @@ export class ReportsService {
     // Generate the PDF and convert to Buffer
     const pdfBuffer: Uint8Array = await page.pdf({
       format: 'A4',
-       // width: '576px',  // 6 inches = 576 pixels
-        // height: '384px', // 4 inches = 384 pixels
+      // width: '576px',  // 6 inches = 576 pixels
+      // height: '384px', // 4 inches = 384 pixels
       printBackground: true,
     });
 
-    // Convert the Uint8Array to a Buffer
-    // const buffer = Buffer.from(pdfBuffer);
     await browser.close();
 
-    // Save the PDF to a file
-    const filePath = path.join(__dirname, '..', '..', 'public', 'reports', 'report.pdf');
+    // Generate a unique file name (e.g., based on an ID or timestamp)
+    const fileName = `report_${data.id || Date.now()}.pdf`;
+    const filePath = path.join(__dirname, '..', '..', 'public', 'reports', fileName);
+
+    // Check if there are any existing reports with a similar pattern and delete them
+    const directoryPath = path.join(__dirname, '..', '..', 'public', 'reports');
+    const files = fs.readdirSync(directoryPath);
+
+    // Delete old files matching your naming convention (optional logic)
+    files.forEach((file) => {
+      if (file.startsWith('report_')) {
+        fs.unlinkSync(path.join(directoryPath, file));
+      }
+    });
+
+    // Save the new report
     fs.writeFileSync(filePath, pdfBuffer);
 
+    // Return the dynamic download URL
+    return `/reports/${fileName}`;
+
+    // other way to send the pdf
+    // const buffer = Buffer.from(pdfBuffer);  // Convert the Uint8Array to a Buffer
+    // await browser.close();
     // return buffer;
-    return `/reports/report.pdf`;
   }
 }

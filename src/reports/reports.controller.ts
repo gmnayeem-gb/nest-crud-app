@@ -36,11 +36,16 @@ export class ReportsController {
 
     // Example data to inject into the template
     const data = {
+      id,
       logo: 'http://localhost:3001/images/logo.png', // Replace with your logo URL or base64
       date: new Date().toLocaleDateString(),
       description: 'This is a detailed report generated dynamically.',
       companyName: 'Your Company Name',
       items: [
+        { description: 'Product Title', price: 50, quantity: 1, sub_total: 50 },
+        { description: 'Product Karkuma Organic Turmeric Immune Booster', price: 390, quantity: 1, sub_total: 390 },
+        { description: 'Product Title', price: 50, quantity: 1, sub_total: 50 },
+        { description: 'Product Karkuma Organic Turmeric Immune Booster', price: 390, quantity: 1, sub_total: 390 },
         { description: 'Product Title', price: 50, quantity: 1, sub_total: 50 },
         { description: 'Product Karkuma Organic Turmeric Immune Booster', price: 390, quantity: 1, sub_total: 390 },
       ],
@@ -60,7 +65,7 @@ export class ReportsController {
     // Generate the PDF
     // const pdfBuffer = await this.reportService.generatePdf(data);
 
-    // // Send the PDF to the client
+    // Send the PDF to the client
     // res.set({
     //   'Content-Type': 'application/pdf',
     //   'Content-Disposition': 'attachment; filename="report.pdf"',
